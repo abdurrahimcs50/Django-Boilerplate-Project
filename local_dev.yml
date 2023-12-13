@@ -1,0 +1,46 @@
+version: "3"
+services:
+  # The web service is your Django application.
+  web:
+    build:
+      # The context is the directory containing the Dockerfile.
+      context: ./src/
+    # The command to start your Django application.
+    # I'm using Gunicorn here, but you could use anything.
+    command: gunicorn 'Django_Boilerplate_Project.wsgi' --bind=0.0.0.0:8000
+    volumes:
+      # Mount the application code into the container.
+      # This is useful for development, as it lets you edit code without rebuilding the image.
+      - ./src/:/usr/src/app/
+      # These volumes store your application's static and media files.
+      # They are kept separate so they can be served by a different server in production.
+      - static_files:/usr/src/app/static
+      - media_files:/home/app/media/
+    ports:
+      # Expose port 8000 in the container to port 8000 on the host machine.
+      - 8000:8000
+    env_file:
+      # Use environment variables from a .env file.
+      # This is where you should put any secrets, like your SECRET_KEY.
+      - src/.env
+      
+  # The db service is your database.
+  db:
+    image: postgres:latest
+    volumes:
+      # This volume stores your database data. It allows data to persist across container restarts.
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      # These environment variables set up the initial database and user.
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    # A friendly name for the container.
+    container_name: dev_postgres_db
+
+# These are the volumes used above.
+# In a development environment, these will be created as anonymous volumes.
+volumes:
+  static_files:
+  media_files:
+  postgres_data:
