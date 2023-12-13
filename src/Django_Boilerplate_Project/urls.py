@@ -17,6 +17,18 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.conf.urls.static import static
+from django.conf import settings
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+# Modifies default django admin titles and headers with custom app detail.
+admin.site.site_header = "Django Boilerplate Project"
+admin.site.site_title = "Django Boilerplate Project ADMIN PORTAL"
+admin.site.index_title = "WELCOME TO Django Boilerplate Project ADMIN PORTAL"
