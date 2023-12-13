@@ -1,0 +1,41 @@
+version: "3"
+services:
+  web:
+    build:
+      context: ./src/
+    # command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn Django_Boilerplate_Project.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - ./src/:/usr/src/app/
+      - static_files:/usr/src/app/static/
+      - media_files:/usr/src/app/media/
+    expose:
+     - 8000
+    # ports:
+    #   - 8000:8000
+    env_file:
+      - ./envs/prod.env
+  
+  db:
+    image: postgres:latest
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    container_name: rahim_upwork_postgres_db
+
+  nginx:
+    build:
+      context: ./nginx/
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/conf.d/:/etc/nginx/conf.d/
+      - static_files:/home/app/static/
+      - media_files:/home/app/media/
+volumes:
+  static_files:
+  media_files:
+  postgres_data:

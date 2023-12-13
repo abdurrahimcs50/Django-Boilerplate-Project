@@ -7,7 +7,7 @@ services:
       context: ./src/
     # The command to start your Django application.
     # I'm using Gunicorn here, but you could use anything.
-    command: gunicorn 'Django_Boilerplate_Project.wsgi' --bind=0.0.0.0:8000
+    command: gunicorn Django_Boilerplate_Project.wsgi:application --bind 0.0.0.0:8000
     volumes:
       # Mount the application code into the container.
       # This is useful for development, as it lets you edit code without rebuilding the image.
@@ -22,14 +22,14 @@ services:
     env_file:
       # Use environment variables from a .env file.
       # This is where you should put any secrets, like your SECRET_KEY.
-      - src/.env
+      - ./envs/dev.env
       
   # The db service is your database.
   db:
     image: postgres:latest
     restart: always
-    env_file:
-      - src/.env  
+    # env_file:
+    #   - src/.env  
     ports:
       - "5432:5432"
     volumes:
