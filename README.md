@@ -8,12 +8,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Make sure to have the following on your host:
 
-- Python 3.11
+- Python
 - Django
+- Postgres
 - Celery
 - Redis
 - ElasticSearch
-- Rabbitmq
 
 ### Setting Up Development Environment with python: 
 
@@ -26,7 +26,7 @@ git clone https://github.com/abdurrahimcs50/Django-Boilerplate-Project.git
    
 ```bash
 #Create a virtualenv:
-python3.11 -m venv <virtual env path>
+python -m venv <virtual env path>
 python -m venv venv
 #Activate the virtualenv you have just created:
 source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
