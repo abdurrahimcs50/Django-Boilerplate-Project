@@ -80,12 +80,26 @@ WSGI_APPLICATION = 'Django_Boilerplate_Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if ENV_FILE_PATH.exists() and DEBUG == 0:
+    DATABASES = {
+        'default': {
+            'ENGINE': os.environ.get("ENGINE"),
+            'NAME': os.environ.get("POSTGRES_DB"),
+            'USER': os.environ.get("POSTGRES_USER"),
+            'PASSWORD': os.environ.get("POSTGRES_PASSWORD"),
+            'HOST': os.environ.get("POSTGRES_HOST"),
+            'PORT': os.environ.get("POSTGRES_PORT"),
+        }
     }
-}
+    print('Use Postgres database', DATABASES)
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+    print('Use SQLite database', DATABASES)
 
 
 # Password validation

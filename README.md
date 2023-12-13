@@ -94,19 +94,19 @@ docker-compose -f local_dev.yml up -d
 docker compose -f local_dev.yml run --rm web python manage.py makemigrations
 
 # Apply database migrations:
-docker compose -f local.yml run --rm web python manage.py migrate
+docker compose -f local_dev.yml run --rm web python manage.py migrate
 
 # Collect static files:
-docker compose -f local.yml run --rm web python manage.py collectstatic
+docker compose -f local_dev.yml run --rm web python manage.py collectstatic
 
 # Create a Django superuser:
-docker compose -f local.yml run --rm web python manage.py createsuperuser
+docker compose -f local_dev.yml run --rm web python manage.py createsuperuser
 
 # Create A New Django App:
-docker compose -f local.yml run --rm web python manage.py startapp app_name
+docker compose -f local_dev.yml run --rm web python manage.py startapp app_name
 
 # Access the Django shell:
-docker compose -f local.yml run --rm web python manage.py shell
+docker compose -f local_dev.yml run --rm web python manage.py shell
 
 ```
 
@@ -115,7 +115,7 @@ docker compose -f local.yml run --rm web python manage.py shell
 ```bash
 # Access bash in the Docker container: If you want to access the bash shell in the Docker container, you can use the exec command with Docker Compose:
 
-docker-compose -f local_dev.yml exec web bash
+docker-compose -f local_dev.yml exec web sh
 
 # Run the Django development server:
 docker-compose -f local_dev.yml exec web python manage.py runserver

@@ -27,6 +27,11 @@ services:
   # The db service is your database.
   db:
     image: postgres:latest
+    restart: always
+    env_file:
+      - src/.env  
+    ports:
+      - "5432:5432"
     volumes:
       # This volume stores your database data. It allows data to persist across container restarts.
       - postgres_data:/var/lib/postgresql/data/
@@ -36,7 +41,7 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
     # A friendly name for the container.
-    container_name: dev_postgres_db
+    container_name: dev_boilerplate_postgres_db
 
 # These are the volumes used above.
 # In a development environment, these will be created as anonymous volumes.
