@@ -32,7 +32,8 @@ DEBUG = int(os.environ.get("DEBUG", default=1))
 print(DEBUG)
 
 # ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(" ")
+ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", default="127.0.0.1,localhost").split(" ")
+print(ALLOWED_HOSTS)
 
 
 # Application definition
@@ -44,6 +45,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'main',
+    
+    'django_celery_beat',
+    'django_celery_results',
+    
 ]
 
 MIDDLEWARE = [
@@ -155,4 +162,27 @@ MEDIA_ROOT = BASE_DIR / "media"
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Celery Settings
+# CELERY_BROKER_URL = "redis://127.0.0.1:6379/0"
+# CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_TIMEZONE = "UTC"
+
+# Enables extended task result attributes (name, args, kwargs, worker, retries, queue, delivery_info) to be written to backend.
+CELERY_RESULT_EXTENDED = True
+
+# # Method 1
+# CELERY_BEAT_SCHEDULE = {
+#     'every-10-seconds':{
+#         'task':'myapp.tasks.clear_session_cache',
+#         'schedule':10,
+#         'args':('11111', )
+#     }
+#     # Add more periodic tasks as needed
+# }
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
