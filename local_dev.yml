@@ -43,6 +43,32 @@ services:
     # A friendly name for the container.
     container_name: dev_boilerplate_postgres_db
 
+  celery:
+    build:
+      context: ./src/
+    command: celery -A Django_Boilerplate_Project.celery worker -l INFO
+    volumes:
+      - ./src/:/usr/src/app/
+    env_file:
+      - ./envs/dev.env
+    depends_on:
+      - web
+      - redis
+  celery-beat:
+    build:
+      context: ./src/
+    command: celery -A Django_Boilerplate_Project beat -l info
+    volumes:
+      - ./src/:/usr/src/app/
+    
+    env_file:
+      - ./envs/dev.env
+    depends_on:
+      - web
+      - redis
+  redis:
+    image: "redis:alpine"
+
 # These are the volumes used above.
 # In a development environment, these will be created as anonymous volumes.
 volumes:
