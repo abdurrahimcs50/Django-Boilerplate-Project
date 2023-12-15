@@ -26,6 +26,32 @@ services:
       - POSTGRES_PASSWORD=postgres
     container_name: rahim_upwork_postgres_db
 
+  celery:
+    build:
+      context: ./src/
+    command: celery -A Django_Boilerplate_Project.celery worker -l INFO
+    volumes:
+      - ./src/:/usr/src/app/
+    env_file:
+      - ./envs/prod.env
+    depends_on:
+      - web
+      - redis
+  celery-beat:
+    build:
+      context: ./src/
+    command: celery -A Django_Boilerplate_Project beat -l info
+    volumes:
+      - ./src/:/usr/src/app/
+    
+    env_file:
+      - ./envs/prod.env
+    depends_on:
+      - web
+      - redis
+  redis:
+    image: "redis:alpine"
+
   nginx:
     build:
       context: ./nginx/
