@@ -11,7 +11,6 @@ This is a boilerplate project for Django applications. It includes Python, Djang
     - [Now, you can visit http://localhost:8000 in your web browser to see your application.](#now-you-can-visit-httplocalhost8000-in-your-web-browser-to-see-your-application)
 - [Build the Stack On Local and Production Development Using Docker and Docker Compose.](#build-the-stack-on-local-and-production-development-using-docker-and-docker-compose)
   - [Execute Management Commands](#execute-management-commands)
-    - [For production:](#for-production)
   - [License](#license)
   - [Contributing](#contributing)
   - [Ways to Contribute](#ways-to-contribute)
@@ -149,13 +148,11 @@ To run the tests for your Django application, you can use the following command 
 
 ### For local development:
 
-```bash
 docker-compose -f local_dev.yml run --rm web python manage.py test
-```
+
 
 ### For production:
 
-```bash
 docker-compose -f production.yml run --rm web python manage.py test
 
 ```
