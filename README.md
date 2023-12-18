@@ -71,6 +71,8 @@ Make sure to have the following on your host:
     POSTGRES_USER=changeme
     POSTGRES_HOST=changeme
     POSTGRES_PORT=changeme
+
+    CELERY_BROKER_URL=redis://redis:6379/0
     ```
 
 5. **Run migrations**: Django uses a database-abstraction API that lets you create, retrieve, update, and delete records.
