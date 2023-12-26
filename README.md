@@ -187,7 +187,7 @@ This project is licensed under the MIT License.
 
 ## Acknowledgments
 
-Special thanks to the Python, Django, PostgreSQL, Docker, Celery, and Redis communities for their invaluable contributions.
+Special thanks to abdurrahimcs50 for creating this incredible Django Boilerplate Template and simplifying the development process.
 
 ## Contact
 
